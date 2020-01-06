@@ -1,23 +1,36 @@
 # doubles
 die <- c(1, 2, 3, 4, 5, 6)
 typeof(die)
+# is.vector() tests if an object is an atomic vector
+is.vector(die)
 
-# integers
+# an atomic vector can have one value
+five <- 5
+is.vector(five)
+
+
+# create an integer vector by adding "L"
 integer <- c(-1L, 2L, 3L)
 typeof(integer)
 
 # floatingpoint errors - should equal zero but does not
 sqrt(2)^2-2
 
+# vector with complex numbers
+complex <- c(1 + 1i, 1 + 2i, 1 + 3i)
+
 # face names of cards of Royal flush
-hand <- c("ace", "King", "Queen", "Jack", "ten")
+hand <- c("Ace", "King", "Queen", "Jack", "ten")
+
 
 # testing for attributes
 attributes(die)
 
 # assigning names attribute to a vector
 names(die) <- c("one", "two", "three", "four", "five", "six")
-
+die
+# change the names attribute of a vector
+names(die) <- c("uno", "dos", "tres", "quatro", "cinco", "seis")
 names(die)
 die
 
@@ -25,7 +38,7 @@ die
 names(die) <- NULL
 names(die)
 
-# converting a vector to an array
+# converting a vector to a 2 x 3 array
 dim(die) <- c(2,3)
 dim
 die
@@ -45,9 +58,12 @@ ar
 # create matrix of royal flush
 hand1 <-  c("ace", "King", "Queen", "Jack", "ten", "spades", "spades", "spades", "spades", "spades")
 matrix(hand1, ncol = 2)
-mhand
+hand1
 dim(hand1)
 
+royal_flush <- c("ace", "king", "queen", "jack", "ten", "spades", "spades", "spades", "spades", "spades")
+royal_flush_matrix <- matrix(royal_flush, 5, 2)
+royal_flush_matrix
 
 # creating object with class matrix by changing dimension 
 die
@@ -79,3 +95,48 @@ as.character(gender)
 typeof(gender)
 class(gender)
 
+
+# exercise - knows that multiple types of data are coerced
+# into a single data type when creating a vector
+card <- c("ace", "heart", 1)
+typeof(card)
+
+# coercion occurs when trying to do mathematical operations
+# with logical values
+sum(c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE))
+
+# functions for converting data types 
+as.character(1)
+as.logical(1)
+as.numeric(FALSE)
+
+
+# the "list" object groups together R objects rather than values
+list_one <- list(100:130, "R", list(TRUE, FALSE))
+list_one
+
+# exercise
+list_card <- list("ace", "heart", 1)
+list_card
+
+
+# creating a data frame
+df <- data.frame(face = c("ace", "two", "six"),
+                 suit = c("clubs", "clubs", "clubs"),
+                 value = c(1, 2, 3))
+df
+
+typeof(df)
+class(df)
+str(df)
+
+df <- data.frame(face = c("ace", "two", "six"),
+                 suit = c("clubs", "clubs", "clubs"),
+                 value = c(1, 2, 3), stringsAsFactors = FALSE)
+str(df)
+
+head(deck)
+
+# saves a copy of the new file
+?write.csv
+write.csv(deck, file = "cards.CSV", row.names = FALSE)
