@@ -1,0 +1,104 @@
+---
+title: "Chapter 4 - R Notation"
+author: "Aodhagan"
+date: "1/6/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# load the data deck from website
+```{r}
+rm(list = ls())
+
+# partition the URL to make it more readable
+url_remote <- "https://gist.githubusercontent.com/"
+path_github <- "garrettgman/9629323/raw/ee5dfc039fd581cb467cc69c226ea2524913c3d8/"
+filename <- "deck.csv"
+
+# assign full URL to variable file_path
+file_path <- paste0(url_remote, path_github, filename)
+
+# read in the file from website
+library(data.table)
+deck <- fread(file_path, header = TRUE)
+```
+
+# selecting values
+you can extract the value or set of values from a data frame using indexing with [ , ]
+```{r}
+deck[1, 1] # first row, first column
+```
+
+## six methods of indexing
+### 1. Positive integers
+e.g.
+```{r}
+deck[1, 2]
+```
+use vectors to select more than one item
+```{r}
+deck[1, c(1, 2, 3)]
+```
+**note** that the methods used for indexing data frames can also be used for other R objects such as Vectors, matrices or arrays
+
+**note** indexing in R begins at 1
+
+**note** if two or more columns are selected in the index a data frame is returned. 
+If only one column is selected a vector is returned.
+```{r}
+deck[1:3, 2]
+```
+if you want to select one column and to have a data frame returned use the argument **drop=FALSE**
+```{r}
+df <- deck[1:2, 1, drop=FALSE]
+is.data.frame(df)
+```
+
+
+### 2. negative integers
+negative integers to the exact opposite of positive integers when indexing i.e. every element except the elements in the negative index will be returned
+```{r}
+# only the first and second rows will be indexed
+deck[-(3:52), 1:3]
+```
+negative integers are more efficient when you want a subset the majority of data frames rows or columns
+
+### 3. zeroes
+R will return nothing from a dimension when you use zero as an index
+```{r}
+deck[0, 0] # data frame with zero columns and zero rows
+```
+
+### 4. Blank spaces
+blank space extracts every value in a dimension
+```{r}
+deck[1, ] # extracts the entire first row of data frame
+```
+
+### 5. Logical values
+you can index a R object using vectors of logical values
+```{r}
+deck[1, c(TRUE, TRUE, FALSE)]
+```
+every index where the vector states "TRUE" will return the corresponding index in the data frame
+
+### 6. names
+you can specify elements in a data frame by name as long as the name attributes exist 
+```{r}
+deck[1, c("face", "suit", "value")]
+```
+
+## exercise 1
+```{r}
+deal <- function(cards){
+  cards[1, ]
+}
+deal(deck)
+```
+
+
+
+
+
