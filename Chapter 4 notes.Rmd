@@ -33,7 +33,7 @@ you can extract the value or set of values from a data frame using indexing with
 deck[1, 1] # first row, first column
 ```
 
-## six methods of indexing
+## six methods of indexing {.tabset}
 ### 1. Positive integers
 e.g.
 ```{r}
@@ -133,7 +133,63 @@ deal(deck2)
 ```
 
 
-# dollar signs and double brackets
+# Dollar signs and double brackets
+what about the two types of R objects that obey optional second system of notation for indexing?
+
+```{r}
+# data frames and lists can use the $ syntax
+deck$value
+```
+what does the dollar notation of indexing return?
+```{r}
+#it returns a vector
+mean(deck$value)
+median(deck$value)
+```
+when subseting a list using the square bracket notation what R object is returned?
+```{r}
+# another list
+lst <- list(numbers = c(1, 2), logical = TRUE, strings = c("a", "b", "c"))
+lst
+lst[1]
+```
+why is this disadvantageous?
+```{r}
+# because many functions do not work with lists
+```
+what R object is returned when you use the dollar notation?
+```{r}
+ #the selected values are returned as they are with no list structure around them
+lst$numbers
+```
+what is the advantage of the dollar notation of indexing lists?
+```{r}
+# you can feed the output of an index directly into another function
+sum(lst$numbers)
+```
+
+when indexing lists what notation can be used if list elements do not have names?
+```{r}
+# use double bracket notation
+lst[[1]]
+```
+so what is the difference between single bracket and double bracket notation when indexing lists?
+```{r}
+# single brackets return a list while double brackets return just the values that were inside an element of the list
+lst["numbers"]
+lst[["numbers"]]
+```
+what does the attach() function do?
+```{r}
+# it allows you to refer to each variable in a data frame by name e.g.face rather than deck$face
+```
+why should this function not be used?
+```{r}
+# it recreates an environment similar to those used in other statistics applications e.g. SPSS.
+# however R is optimised to use the R computing environment
+```
+
+
 
 
 

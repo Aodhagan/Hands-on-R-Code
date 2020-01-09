@@ -462,7 +462,7 @@ deck &lt;- fread(file_path, header = TRUE)</code></pre>
 <pre class="r"><code>deck[1, 1] # first row, first column</code></pre>
 <pre><code>##    face
 ## 1: king</code></pre>
-<div id="six-methods-of-indexing" class="section level2">
+<div id="six-methods-of-indexing" class="section level2 tabset">
 <h2>six methods of indexing</h2>
 <div id="positive-integers" class="section level3">
 <h3>1. Positive integers</h3>
@@ -563,12 +563,12 @@ head(deck3)</code></pre>
 deck4 &lt;- deck[random, ]
 head(deck4)</code></pre>
 <pre><code>##     face     suit value
-## 1:   six   spades     6
-## 2: queen diamonds    12
-## 3:   six   hearts     6
-## 4: eight diamonds     8
-## 5: queen   hearts    12
-## 6:  king diamonds    13</code></pre>
+## 1:   six   hearts     6
+## 2:  king    clubs    13
+## 3:  nine    clubs     9
+## 4: three    clubs     3
+## 5:  king diamonds    13
+## 6:   six   spades     6</code></pre>
 <div id="exercise---create-a-shuffle-function" class="section level2">
 <h2>exercise - create a shuffle function</h2>
 <pre class="r"><code>shuffle &lt;- function(cards){
@@ -582,11 +582,64 @@ head(deck4)</code></pre>
 <pre class="r"><code>deck2 &lt;- shuffle(deck)
 deal(deck2)</code></pre>
 <pre><code>##    face   suit value
-## 1:  ace hearts     1</code></pre>
+## 1: four spades     4</code></pre>
 </div>
 </div>
 <div id="dollar-signs-and-double-brackets" class="section level1">
-<h1>dollar signs and double brackets</h1>
+<h1>Dollar signs and double brackets</h1>
+<p>what about the two types of R objects that obey optional second system of notation for indexing?</p>
+<pre class="r"><code># data frames and lists can use the $ syntax
+deck$value</code></pre>
+<pre><code>##  [1] 13 12 11 10  9  8  7  6  5  4  3  2  1 13 12 11 10  9  8  7  6  5  4
+## [24]  3  2  1 13 12 11 10  9  8  7  6  5  4  3  2  1 13 12 11 10  9  8  7
+## [47]  6  5  4  3  2  1</code></pre>
+<p>what does the dollar notation of indexing return?</p>
+<pre class="r"><code>#it returns a vector
+mean(deck$value)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<pre class="r"><code>median(deck$value)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<p>when subseting a list using the square bracket notation what R object is returned?</p>
+<pre class="r"><code># another list
+lst &lt;- list(numbers = c(1, 2), logical = TRUE, strings = c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;))
+lst</code></pre>
+<pre><code>## $numbers
+## [1] 1 2
+## 
+## $logical
+## [1] TRUE
+## 
+## $strings
+## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="r"><code>lst[1]</code></pre>
+<pre><code>## $numbers
+## [1] 1 2</code></pre>
+<p>why is this disadvantageous?</p>
+<pre class="r"><code># because many functions do not work with lists</code></pre>
+<p>what R object is returned when you use the dollar notation?</p>
+<pre class="r"><code> #the selected values are returned as they are with no list structure around them
+lst$numbers</code></pre>
+<pre><code>## [1] 1 2</code></pre>
+<p>what is the advantage of the dollar notation of indexing lists?</p>
+<pre class="r"><code># you can feed the output of an index directly into another function
+sum(lst$numbers)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>when indexing lists what notation can be used if list elements do not have names?</p>
+<pre class="r"><code># use double bracket notation
+lst[[1]]</code></pre>
+<pre><code>## [1] 1 2</code></pre>
+<p>so what is the difference between single bracket and double bracket notation when indexing lists?</p>
+<pre class="r"><code># single brackets return a list while double brackets return just the values that were inside an element of the list
+lst[&quot;numbers&quot;]</code></pre>
+<pre><code>## $numbers
+## [1] 1 2</code></pre>
+<pre class="r"><code>lst[[&quot;numbers&quot;]]</code></pre>
+<pre><code>## [1] 1 2</code></pre>
+<p>what does the attach() function do?</p>
+<pre class="r"><code># it allows you to refer to each variable in a data frame by name e.g.face rather than deck$face</code></pre>
+<p>why should this function not be used?</p>
+<pre class="r"><code># it recreates an environment similar to those used in other statistics applications e.g. SPSS.
+# however R is optimised to use the R computing environment</code></pre>
 </div>
 
 
