@@ -50,8 +50,9 @@ vec <- c(1, 2, 3)
 vec[c(FALSE, FALSE, TRUE)]
 
 # %in% operator
-1 %in% 
+1 %in% vec
 
+c(1, 2)  %in% c(2, 3, 4)
 
 # exercise - extract the face column of deck2 and test
 ## whether each value is equal to "ace"
@@ -60,7 +61,18 @@ ace
 ## count how many cards  are equal to  "ace"
 sum(ace)
 
+# use  %in%  to select all cards with faces
+deck5 <- deck
+faces <- deck5$face %in% c("jack", "queen", "king")
+deck5$value[faces] <- 10
+deck5
 
+# test for missing values in a vector
+is.na(c(1, 2, NA))
+
+# set the value of ace to na
+deck4$value[deck4$face == 'ace'] <- NA 
+deck4
 # deck for hearts - every card has a value of zero
 deck4 <- deck
 deck4$value <- 0
