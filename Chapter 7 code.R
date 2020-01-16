@@ -46,7 +46,7 @@ score <- function(symbols){
 
 
 # we should not write the entire score() function in one
-## go as it will have a different possible outcomes.
+## go as it will have 8 different possible outcomes.
 ## if the function does not work it will be more 
 ## difficult to debug.
 ## instead write one subtask at a time and test individually
@@ -67,6 +67,7 @@ all(symbols %in% c("B", "BB", "BBB"))
 bars <- symbols %in% c("B", "BB", "BBB")
 
 # what our slot machine function looks like
+
 if (same) {
   prize <- # look up the prize
   } else if (all(bars)) {
@@ -77,3 +78,114 @@ if (same) {
     }
 # count diamonds
 # double the prize if necessary
+
+
+# Next sub task - assign a prize for symbols
+## we could write a series of else/if statements
+# if (same) {
+#   symbol <- symbols[1]
+#   if (symbol == "DD") {
+#     prize <- 800
+#   } else if (symbol == "7") {
+#     prize <- 80
+#   } else if (symbol == "BBB") {
+#     prize <- 40
+#   } else if (symbol == "BB") {
+#     prize <- 5
+#   } else if (symbol == "B") {
+#     prize <- 10
+#   } else if (symbol == "C") {
+#     prize <- 10
+#   } else if (symbol == "0") {
+#     prize <- 0
+#       }
+#     }
+
+# or we could use lookup tables
+## create a vector naming each of the elements
+payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+             "B" = 10, "C" = 10, "0" = 0)
+payouts
+payouts["DD"]
+
+# to not print the symbols name use unname()
+unname(payouts["DD"])
+
+# we can subset payouts with another subseted vector
+## this allows us an automated way to calculate
+## the prize when symbols contains three of a kind
+symbols <- c("7", "7", "7")
+payouts[symbols[1]]
+
+# update the code
+same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+bars <- symbols %in% c("B", "BB", "BBB")
+if (same) {
+  payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+               "B" = 10, "C" = 10, "0" = 0)
+  prize <- unname(payouts[symbols[1]])
+} else if (all(bars)) {
+  prize <- # assign $5
+} else {
+  # count cherries
+  prize <- # calculate a prize
+}
+# count diamonds
+# double the prize if necessary
+
+
+# case to is when the symbols are all bars
+## in this case the price is five dollars
+same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+bars <- symbols %in% c("B", "BB", "BBB")
+if (same) {
+  payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+               "B" = 10, "C" = 10, "0" = 0)
+  prize <- unname(payouts[symbols[1]])
+} else if (all(bars)) {
+  prize <- 5
+} else {
+  # count cherries
+  prize <- # calculate a prize
+}
+# count diamonds
+# double the prize if necessary
+
+
+# exercise - How can you tell which elements of a vector 
+## named symbols are a C ? Devise a test and
+## try it out
+symbols <- c('7', 'C', '7')
+count <- 0
+for (i in symbols) {
+  if (i == 'C') {
+    print(count)
+    count <- count + 1
+}  else{
+    count <- count + 1
+  }
+}
+
+## easier method
+symbols == "C"
+
+# challenge - count the number of "C"s in a vector
+sum(symbols == "C")
+
+
+# update the code
+same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+bars <- symbols %in% c("B", "BB", "BBB")
+if (same) {
+  payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+               "B" = 10, "C" = 10, "0" = 0)
+  prize <- unname(payouts[symbols[1]])
+} else if (all(bars)) {
+  prize <- 5
+} else {
+  cherries <- sum(symbols == "C")
+  prize <- # calculate a prize
+}
+diamonds <- sum(symbols == "DD")
+# double the prize if necessary
+
