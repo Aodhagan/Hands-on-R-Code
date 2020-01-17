@@ -155,22 +155,25 @@ if (same) {
 # exercise - How can you tell which elements of a vector 
 ## named symbols are a C ? Devise a test and
 ## try it out
-symbols <- c('7', 'C', '7')
-count <- 0
-for (i in symbols) {
-  if (i == 'C') {
-    print(count)
-    count <- count + 1
-}  else{
-    count <- count + 1
-  }
-}
+## my attempt
+# symbols <- c('7', 'C', '7')
+# count <- 0
+# for (i in symbols) {
+#   if (i == 'C') {
+#     print(count)
+#     count <- count + 1
+# }  else{
+#     count <- count + 1
+#   }
+# }
 
-## easier method
-symbols == "C"
 
-# challenge - count the number of "C"s in a vector
+# how to find how may cherries are in symbols - easier
+symbols <- c("C", "DD", "C")
 sum(symbols == "C")
+
+# use the same method to count diamonds
+sum(symbols == "DD")
 
 
 # update the code
@@ -189,3 +192,103 @@ if (same) {
 diamonds <- sum(symbols == "DD")
 # double the prize if necessary
 
+cherries <- sum(symbols == "C")
+# case 3 - $5 for two cherries, $2 for one cherry
+## inefficient method
+if (cherries == 2) {
+  prize  <- 5
+} else if (cherries == 1) {
+  prize  <- 2
+} else {
+  prize  <- 0
+}
+
+## more efficient method - again use lookup table
+c(0, 2, 5)[cherries + 1]
+
+
+# update the code
+same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+bars <- symbols %in% c("B", "BB", "BBB")
+if (same) {
+  payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+               "B" = 10, "C" = 10, "0" = 0)
+  prize <- unname(payouts[symbols[1]])
+} else if (all(bars)) {
+  prize <- 5
+} else {
+  cherries <- sum(symbols == "C")
+  prize <- c(0, 2, 5)[cherries + 1]
+}
+diamonds <- sum(symbols == "DD")
+# double the prize if necessary
+
+
+# exercise - write a method for adjusting prize 
+## based on diamonds - my attempt
+double <- c(1, 2, 4, 8)
+diamonds <- sum(symbols == 'DD')
+prize <- prize * double[diamonds + 1]
+prize
+
+## easier method
+prize * 2 ^ diamonds
+
+
+# update the code - final version
+## identify case
+same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+bars <- symbols %in% c("B", "BB", "BBB")
+
+## get prize
+if (same) {
+  payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+               "B" = 10, "C" = 10, "0" = 0)
+  prize <- unname(payouts[symbols[1]])
+} else if (all(bars)) {
+  prize <- 5
+} else {
+  cherries <- sum(symbols == "C")
+  prize <- c(0, 2, 5)[cherries + 1]
+}
+# adjust for diamonds
+diamonds <- sum(symbols == "DD")
+prize * 2 ^ diamonds
+
+
+# wrap code in function
+score <- function(symbols){
+  ## identify case
+  same <- symbols[1] == symbols[2] && symbols[2] == symbols[3]
+  bars <- symbols %in% c("B", "BB", "BBB")
+  
+  ## get prize
+  if (same) {
+    payouts <- c("DD" = 100, "7" = 80, "BBB" = 40, "BB" = 25,
+                 "B" = 10, "C" = 10, "0" = 0)
+    prize <- unname(payouts[symbols[1]])
+  } else if (all(bars)) {
+    prize <- 5
+  } else {
+    cherries <- sum(symbols == "C")
+    prize <- c(0, 2, 5)[cherries + 1]
+  }
+  # adjust for diamonds
+  diamonds <- sum(symbols == "DD")
+  prize * 2 ^ diamonds
+}
+
+# now  the play() function will work
+play <- function(){
+  
+  # step one: generate symbols
+  symbols <- get_symbols()
+  
+  # step two: display the symbols
+  print(symbols)
+  
+  # step three: score the symbols
+  score(symbols)
+  
+}
+play()
